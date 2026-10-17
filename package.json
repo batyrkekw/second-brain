@@ -1,0 +1,35 @@
+{
+  "name": "second-brain",
+  "version": "1.0.0",
+  "description": "Private Telegram knowledge manager on Cloudflare Workers and D1",
+  "scripts": {
+    "dev": "wrangler dev",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "db:local": "wrangler d1 migrations apply DB --local",
+    "db:remote": "wrangler d1 migrations apply DB --remote",
+    "deploy": "wrangler deploy",
+    "webhook:setup": "node scripts/webhook.mjs",
+    "check": "npm run typecheck && npm run lint && npm test && npm run db:local && npm run test:runtime",
+    "test:runtime": "npm run build && node scripts/runtime-smoke.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261016.1",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "prettier": "^3.9.10",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^5.0.5",
+    "wrangler": "^4.151.1"
+  },
+  "dependencies": {
+    "@js-temporal/polyfill": "^0.5.1"
+  }
+}

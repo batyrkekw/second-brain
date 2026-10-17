@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "second-brain",
+  "account_id": "1f10d8debbf323a3c6778e33f1cb1f78",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-17",
+  "workers_dev": true,
+  "preview_urls": false,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "second-brain",
+      "database_id": "6412843d-fe3f-4b61-bfa2-acd886784e30",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "triggers": { "crons": ["* * * * *"] },
+  "observability": { "enabled": false },
+}

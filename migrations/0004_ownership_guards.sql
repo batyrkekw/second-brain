@@ -1,0 +1,6 @@
+-- Defense in depth for optional note links and vocabulary associations.
+CREATE TRIGGER tasks_note_owner_insert BEFORE INSERT ON tasks WHEN NEW.note_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM notes WHERE id=NEW.note_id AND user_id=NEW.user_id) BEGIN SELECT RAISE(ABORT,'note owner mismatch'); END;
+CREATE TRIGGER tasks_note_owner_update BEFORE UPDATE OF note_id,user_id ON tasks WHEN NEW.note_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM notes WHERE id=NEW.note_id AND user_id=NEW.user_id) BEGIN SELECT RAISE(ABORT,'note owner mismatch'); END;
+CREATE TRIGGER reminders_note_owner_insert BEFORE INSERT ON reminders WHEN NEW.note_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM notes WHERE id=NEW.note_id AND user_id=NEW.user_id) BEGIN SELECT RAISE(ABORT,'note owner mismatch'); END;
+CREATE TRIGGER reminders_note_owner_update BEFORE UPDATE OF note_id,user_id ON reminders WHEN NEW.note_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM notes WHERE id=NEW.note_id AND user_id=NEW.user_id) BEGIN SELECT RAISE(ABORT,'note owner mismatch'); END;
+CREATE TRIGGER vocab_tag_owner_insert BEFORE INSERT ON vocabulary_tags WHEN NOT EXISTS(SELECT 1 FROM vocabulary v JOIN tags t ON t.user_id=v.user_id WHERE v.id=NEW.vocabulary_id AND t.id=NEW.tag_id) BEGIN SELECT RAISE(ABORT,'tag owner mismatch'); END;
