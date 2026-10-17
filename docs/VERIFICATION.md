@@ -20,13 +20,15 @@ Date: 17 October 2026 (Asia/Almaty).
 - Genuine Telegram updates reached the Worker and passed authentication. After the fetch fix, Telegram’s pending-update count drained to zero; D1 contained one real test note, two accepted replies and zero pending replies.
 - Fixed the production-only native-fetch receiver bug: the client now binds injected fetch to `globalThis`. Before the fix, Worker-side getMe returned the wrapper's retryable 503; after deployment it returned HTTP 200 with the correct bot username. A regression test reproduces a receiver-sensitive native fetch.
 - A secret-protected, read-only `/diagnostics/telegram` endpoint verifies Worker-side bot authentication without exposing credentials or private content.
-- Private GitHub repository created and visibility verified in Safari: https://github.com/batyrkekw/second-brain. Existing Git keychain authentication successfully reads the empty remote.
+- Private GitHub repository published and visibility verified in Safari: https://github.com/batyrkekw/second-brain. Initial implementation commit `5f88e2346fbd2d123c068e716fbe99ab86c8bbc8` was verified to match local HEAD and remote main.
 
-## Pending verification
+- Real persistent reminder creation, confirmation, Cron delivery and dismissal verified. Telegram accepted the notification 15,538 ms after its due time; delivery status was subsequently dismissed. No pending webhook replies remained.
 
-- Live reminder confirmation and scheduled delivery (awaiting user test).
-- First real Cron reminder delivery, timing and logs.
-- CI execution on GitHub.
+- GitHub CI passed for the published implementation commit: https://github.com/batyrkekw/second-brain/actions/runs/39019037877 (24 seconds).
+
+## Not manually exercised
+
+Broader live multi-account CRUD workflows were not manually exercised. Ownership isolation and full CRUD are covered by automated integration tests. No required deployment configuration remains outstanding.
 
 ## Test scope
 
